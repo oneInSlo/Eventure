@@ -1,0 +1,62 @@
+:root {
+  --jumbotron-font-size-big: 2.5em;
+  --jumbotron-font-size-medium: 1.8em;
+}
+
+.big-text {
+  font-size: var(--jumbotron-font-size-big);
+}
+
+.medium-text {
+  font-size: var(--jumbotron-font-size-medium);
+}
+
+.madimi-one-regular {
+  font-family: "Madimi One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.madimi {
+  font-family: "Madimi One", sans-serif;
+}
+
+.logo {
+  max-height: 80px;
+}
+
+.img-container {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+}
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+@media (max-width: 600px) {
+  .big-text {
+    font-size: 2.5rem;
+  }
+  .medium-text {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+
+}
