@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 export const HeroComponent = () => {
     return (
         <div>
-            <div className="text-center m-5">
+            <div className="text-center m-5 bg-danger rounded-4">
                 <div className="container-fluid g-0">
                     <img
                         style={{maxHeight: '400px', objectFit: 'cover'}}
@@ -20,7 +20,7 @@ export const HeroComponent = () => {
                                 <div>
                                     <img src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} className={"logo mb-3"}/>
                                     <h1><span className="text-danger madimi-one-regular big-text">EVENTURE</span></h1>
-                                    <p className="display-6 madimi medium-text">Discover Maribor's Best Events!</p>
+                                    <p className="display-6 madimi medium-text">Discover Maribor's Upcoming Events!</p>
                                 </div>
                             </div>
                         </div>
