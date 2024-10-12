@@ -1,27 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // to make HTTP requests
+import axios from 'axios';
+import { EventDetailsModalComponent } from "./EventDetailsModalComponent";
 
 export const EventsComponent = () => {
     const [events, setEvents] = useState([]); // state to hold event data
+    const [selectedEvent, setSelectedEvent] = useState(null); // state to hold the selected event for editing
+    const [showModal, setShowModal] = useState(false); // state to control modal visibility
 
-    // Fetch events from the backend
+    // fetch events from the backend
+    const fetchEvents = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/events');
+            setEvents(response.data);
+        } catch (error) {
+            console.error("Error fetching events:", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/events');
-                setEvents(response.data);
-            } catch (error) {
-                console.error("Error fetching events:", error);
-            }
-        };
-
         fetchEvents();
     }, []);
+
+
+    const handleCreateNewEvent = () => {
+        setSelectedEvent(null); // clear any selected event
+        setShowModal(true); // open the modal
+    }
+
+    const handleEditEvent = (event) => {
+        setSelectedEvent(event); // set the event to be edited
+        setShowModal(true); // open the modal
+    }
 
     return (
         <div className="py-5 bg-light" id="events">
             <div className="container my-5">
                 <h1 className="text-center big-text madimi-one-regular text-danger">EXPLORE EVENTS</h1>
+                <div className="text-end">
+                    <button className="btn btn-danger px-5" onClick={handleCreateNewEvent}>Create a New Event</button>
+                </div>
                 <div className="row mt-5">
                     {events.length > 0 ? (
                         events.map(event => (
@@ -38,9 +55,9 @@ export const EventsComponent = () => {
                                         <h3 className="card-title text-danger madimi">{event.event_name}</h3>
                                         <p className="card-text">{event.event_description}</p>
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <small className="text-muted">Just added</small>
+                                            <small className="text-muted">{event.event_datetime_start}</small>
                                             <div className="btn-group" role="group" aria-label="Button group">
-                                                <button className="btn btn-sm btn-outline-secondary px-3">Edit Event</button>
+                                                <button className="btn btn-sm btn-outline-secondary px-3" onClick={() => handleEditEvent(event)}>Edit Event</button>
                                                 <button className="btn btn-sm btn-danger px-3">View Event</button>
                                             </div>
                                         </div>
@@ -49,10 +66,12 @@ export const EventsComponent = () => {
                             </div>
                         ))
                     ) : (
-                        <p>No events found.</p>
+                        <p>Sorry! No events found.</p>
                     )}
                 </div>
             </div>
+
+            {showModal && <EventDetailsModalComponent event={selectedEvent} setShowModal={setShowModal} refreshEvents={fetchEvents}/>}
         </div>
     );
 };

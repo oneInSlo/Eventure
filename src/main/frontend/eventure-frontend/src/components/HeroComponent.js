@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 export const HeroComponent = () => {
     return (
@@ -18,7 +18,7 @@ export const HeroComponent = () => {
                         <div className="col">
                             <div className="lc-block">
                                 <div>
-                                    <img src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} className={"logo mb-3"}/>
+                                    <img src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} className={"logo mb-3"} alt={"logo"}/>
                                     <h1><span className="text-danger madimi-one-regular big-text">EVENTURE</span></h1>
                                     <p className="display-6 madimi medium-text">Discover Maribor's Upcoming Events!</p>
                                 </div>
