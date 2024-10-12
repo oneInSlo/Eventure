@@ -35,29 +35,32 @@ public class EventureController {
     }
 
     @GetMapping("/events/{id}")
-    public Optional<Event> getEventById(@PathParam("id") int id) {
-        logger.info("Getting event...");
+    public Optional<Event> getEventById(@PathVariable("id") Integer id) {
+        logger.info("Getting event with id: " + id);
         return eventService.findById(id);
     }
 
     @PostMapping("/events")
-    public void addEvent(Event event) {
+    public void addEvent(@RequestBody Event event) {
+        System.out.println(event);
         logger.info("Adding event...");
         eventService.save(event);
     }
 
     @PutMapping("/events/{id}")
-    public Event updateEvent(Event eventDetails, @PathParam("id") int id) {
+    public Event updateEvent(@RequestBody Event eventDetails, @PathVariable("id") int id) {
         logger.info("Updating event...");
 
         Optional<Event> eventTemp = eventService.findById(id);
         Event event = eventTemp.orElse(null); // the same as ---> Event event = eventTemp.isPresent() ? eventTemp.get() : null
 
         if (event != null) {
-            event.setEventName(eventDetails.getEventName());
-            event.setEventDescription(eventDetails.getEventDescription());
-            event.setEventLocation(eventDetails.getEventLocation());
-            event.setEventDate(eventDetails.getEventDate());
+            event.setEvent_name(eventDetails.getEvent_name());
+            event.setEvent_description(eventDetails.getEvent_description());
+            event.setEvent_location(eventDetails.getEvent_location());
+            event.setEvent_datetime_start(eventDetails.getEvent_datetime_start());
+            event.setEvent_datetime_end(eventDetails.getEvent_datetime_end());
+            event.setEvent_costs(eventDetails.getEvent_costs());
 
             return eventService.save(event);
         }
@@ -66,7 +69,7 @@ public class EventureController {
     }
 
     @DeleteMapping("/events/{id}")
-    public void deleteEventById(@PathParam("id") int id) {
+    public void deleteEventById(@PathVariable("id") int id) {
         logger.info("Deleting event...");
         eventService.deleteById(id);
     }
