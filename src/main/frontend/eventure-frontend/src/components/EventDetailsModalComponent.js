@@ -28,6 +28,18 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
         setFormData(prev => ({ ...prev, image: e.target.files[0] }));
     };
 
+    const handleDelete = async () => {
+        console.log(event.id);
+        try {
+            await axios.delete(`http://localhost:8080/events/${event.id}`);
+            refreshEvents();
+            setShowModal(false);
+        } catch (error) {
+            console.error("Error deleting event:", error);
+            alert("There was an error deleting the event. Please try again.");
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -70,7 +82,7 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
         }
     }
 
-    function formatDateTime(datetimeString) {
+    const formatDateTime = (datetimeString) => {
         const date = new Date(datetimeString);
 
         const year = date.getFullYear();
@@ -146,15 +158,18 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="submit"
-                                    className="btn btn-danger">{event ? 'Update Event' : 'Create Event'}</button>
-                            <button type="button" className="btn btn-secondary"
-                                    onClick={() => setShowModal(false)}>Close
-                            </button>
+                            <div className="btn-group" role="group" aria-label="Basic example">
+                                <button type="submit" className="btn btn-danger px-4">
+                                    {event ? 'Update' : 'Create'}
+                                </button>
+                                <button type="button" className="btn btn-light border border-dark px-4"
+                                        onClick={handleDelete}>Delete
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    );
+);
 }
