@@ -36,10 +36,16 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
         data.append('event_description', formData.event_description);
         data.append('event_location', formData.event_location);
         data.append('event_costs', formData.event_costs);
-        data.append('event_datetime_start', formData.event_datetime_start.toISOString());
-        data.append('event_datetime_end', formData.event_datetime_end.toISOString());
+        data.append('event_datetime_start', formatDateTime(formData.event_datetime_start));
+        data.append('event_datetime_end', formatDateTime(formData.event_datetime_end));
+
         if (formData.image) {
             data.append('image', formData.image);
+        }
+
+        // check console
+        for (let pair of data.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
         }
 
         try {
@@ -64,6 +70,20 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
         }
     }
 
+    function formatDateTime(datetimeString) {
+        const date = new Date(datetimeString);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
     return (
         <div className="modal show d-block" tabIndex="-1">
             <div className="modal-dialog modal-dialog-centered">
@@ -83,7 +103,7 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="event_description" className="form-label">Event Description</label>
-                                <input type="text" className="form-control" name="event_description"
+                                <textarea className="form-control" name="event_description"
                                        value={formData.event_description} onChange={handleChange} required/>
                             </div>
                             <div className="mb-3">
@@ -122,8 +142,7 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="image" className="form-label">Event Image</label>
-                                <input type="file" className="form-control" onChange={handleFileChange}
-                                       accept="image/*"/>
+                                <input type="file" className="form-control" onChange={handleFileChange} accept="image/*"/>
                             </div>
                         </div>
                         <div className="modal-footer">
