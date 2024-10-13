@@ -5,6 +5,8 @@ import axios from 'axios';
 
 export const EventsComponent = () => {
     const [events, setEvents] = useState([]); // state to hold event data
+    const [filteredEvents, setFilteredEvents] = useState([]); // state to hold filtered events
+    const [searchQuery, setSearchQuery] = useState(''); // state to hold search query
     const [selectedEvent, setSelectedEvent] = useState(null); // state to hold the selected event for editing
     const [showModal, setShowModal] = useState(false); // state to control modal visibility
     const navigate = useNavigate();
@@ -14,6 +16,7 @@ export const EventsComponent = () => {
         try {
             const response = await axios.get('http://localhost:8080/events');
             setEvents(response.data);
+            setFilteredEvents(response.data);
         } catch (error) {
             console.error("Error fetching events:", error);
         }
@@ -38,13 +41,21 @@ export const EventsComponent = () => {
         navigate(`/events/${id}`);
     }
 
+    const handleSearchChange = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        const filtered = events.filter(event => event.event_name.toLowerCase().includes(query));
+        setFilteredEvents(filtered);
+    }
+
     return (
         <div className="py-5 bg-light" id="events">
             <div className="container my-5">
                 <h1 className="text-center big-text madimi-one-regular text-danger">EXPLORE EVENTS</h1>
                 <div className="input-group mt-4">
                     <input type="text" className="form-control" id="search-input"
-                           placeholder="Search Events..."/>
+                           placeholder="Search Events..." value={searchQuery} onChange={handleSearchChange}/>
                     <span className="input-group-text bg-light" id="basic-addon3">
                         <lord-icon
                             src="https://cdn.lordicon.com/qxvhathv.json"
@@ -59,8 +70,8 @@ export const EventsComponent = () => {
                     <button className="btn btn-danger" onClick={handleCreateNewEvent}>Create a New Event</button>
                 </div>
                 <div className="row mt-5">
-                    {events.length > 0 ? (
-                        events.map(event => (
+                    {filteredEvents.length > 0 ? (
+                        filteredEvents.map(event => (
                             <div key={event.id} className="col-md-4">
                                 <div className="card mb-4 box-shadow text-start">
                                     <div className="img-container">
