@@ -53,6 +53,9 @@ export const EventsComponent = () => {
         <div className="py-5 bg-light" id="events">
             <div className="container my-5">
                 <h1 className="text-center big-text madimi-one-regular text-danger">EXPLORE EVENTS</h1>
+                <div className="text-end mt-4">
+                    <button className="btn btn-danger" onClick={handleCreateNewEvent}>Create a New Event</button>
+                </div>
                 <div className="input-group mt-4">
                     <input type="text" className="form-control" id="search-input"
                            placeholder="Search Events..." value={searchQuery} onChange={handleSearchChange}/>
@@ -65,9 +68,6 @@ export const EventsComponent = () => {
                             style={{width: '30', height: '30'}}>
                         </lord-icon>
                     </span>
-                </div>
-                <div className="text-end mt-4">
-                    <button className="btn btn-danger" onClick={handleCreateNewEvent}>Create a New Event</button>
                 </div>
                 <div className="row mt-5">
                     {filteredEvents.length > 0 ? (

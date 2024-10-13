@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export const EventDetailsPage = () => {
     const { id } = useParams();
@@ -23,9 +25,26 @@ export const EventDetailsPage = () => {
         return <div>Loading...</div>;
     }
 
+    const exportToPDF = () => {
+        const input = document.getElementById('event-details');
+
+        html2canvas(input)
+            .then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF();
+                const imgHeight = (canvas.height * 210) / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', 10, 10, 190, imgHeight);
+
+                pdf.save(`${event.event_name}.pdf`);
+            }).catch((error) => {
+                console.error('Error exporting PDF:', error);
+            });
+    }
+
     return (
         <div>
-            <div className="text-center m-5 rounded-4">
+            <div id="event-details"  className="text-center m-5 rounded-4">
                 <div className="container-fluid g-0">
                     <img
                         style={{maxHeight: '600px', objectFit: 'cover'}}
@@ -34,7 +53,6 @@ export const EventDetailsPage = () => {
                         alt="Maribor"
                     />
                 </div>
-
                 <div className="container p-5 bg-body mt-md-n7 position-relative rounded-4 border border-dark">
                     <div className="row">
                         <div className="col">
@@ -63,6 +81,9 @@ export const EventDetailsPage = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="text-center mt-4 mb-5">
+                <button className="btn btn-danger" onClick={exportToPDF}>Export Event to PDF</button>
             </div>
         </div>
     );
