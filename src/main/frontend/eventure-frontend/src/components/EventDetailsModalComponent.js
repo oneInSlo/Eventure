@@ -135,7 +135,7 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
                                             showTimeSelect
                                             dateFormat="Pp"
                                             className="form-control"
-                                        />
+                                         showMonthYearDropdown/>
                                     </div>
                                     <div className="col-6">
                                         <label className="form-label">Event End Date & Time </label>
@@ -146,7 +146,7 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
                                                 showTimeSelect
                                                 dateFormat="Pp"
                                                 className="form-control"
-                                            />
+                                             showMonthYearDropdown/>
                                         </div>
                                     </div>
                                 </div>
