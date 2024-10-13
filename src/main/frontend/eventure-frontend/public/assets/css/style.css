@@ -37,6 +37,20 @@
   object-fit: cover;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1040;
+}
+
+.modal-content {
+  z-index: 1050;
+}
+
 footer {
   padding-top: 3rem;
   padding-bottom: 3rem;

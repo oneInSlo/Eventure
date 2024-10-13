@@ -97,83 +97,87 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
     }
 
     return (
-        <div className="modal show d-block" tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                    <form onSubmit={handleSubmit}>
-                        <div className="modal-header bg-danger">
-                            <h1 className="modal-title fs-5 text-white">
-                                {event ? 'Edit Event' : 'Create a New Event'}
-                            </h1>
-                            <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="mb-3">
-                                <label htmlFor="event_name" className="form-label">Event Name</label>
-                                <input type="text" className="form-control" name="event_name"
-                                       value={formData.event_name} onChange={handleChange} required/>
+        <>
+            <div className="modal-overlay" onClick={() => setShowModal(false)}></div>
+
+            <div className="modal show d-block" tabIndex="-1">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <form onSubmit={handleSubmit}>
+                            <div className="modal-header bg-danger">
+                                <h1 className="modal-title fs-5 text-white madimi-one-regular">
+                                    {event ? 'Edit Event' : 'Create a New Event'}
+                                </h1>
+                                <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="event_description" className="form-label">Event Description</label>
-                                <textarea className="form-control" name="event_description"
-                                       value={formData.event_description} onChange={handleChange} required/>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="event_location" className="form-label">Event Location</label>
-                                <input type="text" className="form-control" name="event_location"
-                                       value={formData.event_location} onChange={handleChange} required/>
-                            </div>
-                            <div className="row mb-3">
-                                <div className="col-6">
-                                    <label className="form-label">Event Start Date & Time </label>
-                                    <DatePicker
-                                        selected={formData.event_datetime_start}
-                                        onChange={(date) => handleDateChange(date, 'event_datetime_start')}
-                                        showTimeSelect
-                                        dateFormat="Pp"
-                                        className="form-control"
-                                    />
+                            <div className="modal-body">
+                                <div className="mb-3">
+                                    <label htmlFor="event_name" className="form-label">Event Name</label>
+                                    <input type="text" className="form-control" name="event_name"
+                                           value={formData.event_name} onChange={handleChange} required/>
                                 </div>
-                                <div className="col-6">
-                                    <label className="form-label">Event End Date & Time </label>
-                                    <div className="">
+                                <div className="mb-3">
+                                    <label htmlFor="event_description" className="form-label">Event Description</label>
+                                    <textarea className="form-control" name="event_description"
+                                           value={formData.event_description} onChange={handleChange} required/>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="event_location" className="form-label">Event Location</label>
+                                    <input type="text" className="form-control" name="event_location"
+                                           value={formData.event_location} onChange={handleChange} required/>
+                                </div>
+                                <div className="row mb-3">
+                                    <div className="col-6">
+                                        <label className="form-label">Event Start Date & Time </label>
                                         <DatePicker
-                                            selected={formData.event_datetime_end}
-                                            onChange={(date) => handleDateChange(date, 'event_datetime_end')}
+                                            selected={formData.event_datetime_start}
+                                            onChange={(date) => handleDateChange(date, 'event_datetime_start')}
                                             showTimeSelect
                                             dateFormat="Pp"
                                             className="form-control"
                                         />
                                     </div>
+                                    <div className="col-6">
+                                        <label className="form-label">Event End Date & Time </label>
+                                        <div className="">
+                                            <DatePicker
+                                                selected={formData.event_datetime_end}
+                                                onChange={(date) => handleDateChange(date, 'event_datetime_end')}
+                                                showTimeSelect
+                                                dateFormat="Pp"
+                                                className="form-control"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="event_costs" className="form-label">Event Costs</label>
+                                    <input type="number" className="form-control" name="event_costs"
+                                           value={formData.event_costs} onChange={handleChange} required/>
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="image" className="form-label">Event Image</label>
+                                    <input type="file" className="form-control" onChange={handleFileChange} accept="image/*"/>
                                 </div>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="event_costs" className="form-label">Event Costs</label>
-                                <input type="number" className="form-control" name="event_costs"
-                                       value={formData.event_costs} onChange={handleChange} required/>
+                            <div className="modal-footer">
+                                <div className="btn-group" role="group" aria-label="Basic example">
+                                    <button type="submit" className="btn btn-light border border-dark px-4">
+                                        {event ? 'Update' : 'Create'}
+                                    </button>
+                                    {
+                                        event ?
+                                            <button type="button" className="btn btn-danger px-4"
+                                                    onClick={handleDelete}> Delete
+                                            </button>
+                                            : null
+                                    }
+                                </div>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="image" className="form-label">Event Image</label>
-                                <input type="file" className="form-control" onChange={handleFileChange} accept="image/*"/>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <div className="btn-group" role="group" aria-label="Basic example">
-                                <button type="submit" className="btn btn-danger px-4">
-                                    {event ? 'Update' : 'Create'}
-                                </button>
-                                {
-                                    event ?
-                                        <button type="button" className="btn btn-light border border-dark px-4"
-                                                onClick={handleDelete}> Delete
-                                        </button>
-                                        : null
-                                }
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

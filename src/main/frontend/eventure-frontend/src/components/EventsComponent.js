@@ -61,7 +61,7 @@ export const EventsComponent = () => {
                                         <h3 className="card-title text-danger madimi">{event.event_name}</h3>
                                         <p className="card-text">{event.event_description}</p>
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <small className="text-muted">{event.event_datetime_start}</small>
+                                            <small className="text-muted">{new Date(event.event_datetime_start).toLocaleString()}</small>
                                             <div className="btn-group" role="group" aria-label="Button group">
                                                 <button className="btn btn-sm btn-outline-secondary px-3" onClick={() => handleEditEvent(event)}>Edit Event</button>
                                                 <button className="btn btn-sm btn-danger px-3" onClick={() => handleViewEvent(event.id)}>View Event</button>
