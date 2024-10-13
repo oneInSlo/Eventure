@@ -162,14 +162,18 @@ export const EventDetailsModalComponent = ({event, setShowModal, refreshEvents})
                                 <button type="submit" className="btn btn-danger px-4">
                                     {event ? 'Update' : 'Create'}
                                 </button>
-                                <button type="button" className="btn btn-light border border-dark px-4"
-                                        onClick={handleDelete}>Delete
-                                </button>
+                                {
+                                    event ?
+                                        <button type="button" className="btn btn-light border border-dark px-4"
+                                                onClick={handleDelete}> Delete
+                                        </button>
+                                        : null
+                                }
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-);
+    );
 }

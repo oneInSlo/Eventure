@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { EventDetailsModalComponent } from "./EventDetailsModalComponent";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export const EventsComponent = () => {
     const [events, setEvents] = useState([]); // state to hold event data
     const [selectedEvent, setSelectedEvent] = useState(null); // state to hold the selected event for editing
     const [showModal, setShowModal] = useState(false); // state to control modal visibility
+    const navigate = useNavigate();
 
     // fetch events from the backend
     const fetchEvents = async () => {
@@ -30,6 +32,10 @@ export const EventsComponent = () => {
     const handleEditEvent = (event) => {
         setSelectedEvent(event); // set the event to be edited
         setShowModal(true); // open the modal
+    }
+
+    const handleViewEvent = (id) => {
+        navigate(`/events/${id}`);
     }
 
     return (
@@ -58,7 +64,7 @@ export const EventsComponent = () => {
                                             <small className="text-muted">{event.event_datetime_start}</small>
                                             <div className="btn-group" role="group" aria-label="Button group">
                                                 <button className="btn btn-sm btn-outline-secondary px-3" onClick={() => handleEditEvent(event)}>Edit Event</button>
-                                                <button className="btn btn-sm btn-danger px-3">View Event</button>
+                                                <button className="btn btn-sm btn-danger px-3" onClick={() => handleViewEvent(event.id)}>View Event</button>
                                             </div>
                                         </div>
                                     </div>
